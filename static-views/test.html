@@ -1,0 +1,17 @@
+<html> 
+  <head>
+    <script src="js/jquery.js"></script>
+
+  </head>
+  <body>
+    <button id="btn">click me</button>
+    <script type="text/javascript">
+      $('#btn').on('click',function(){
+        $.post('/testPost',function(){
+          alert(1);
+          alert('suc');
+        })
+      });
+    </script>
+  </body>
+</html>

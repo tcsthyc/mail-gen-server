@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="/js/jquery.js"></script>
+  </head>
+  <body>
+    <input type="text" name="title" placeholder="标题">
+    <input type="text" name="description" placeholder="描述">
+    <input type="text" name="like" placeholder="喜欢">
+    <input type="text" name="follow" placeholder="follow">
+    <input type="text" name="img1" placeholder="图片1">
+    <input type="text" name="img2" placeholder="图片2">
+    <input type="text" name="img3" placeholder="图片3">
+    <button id="btn_addA">add A</button>
+    <button id="btn_addB">add B</button>
+    <button id="submit">submit</button>
+    <script type="text/javascript">
+      var query = [];
+      $('#btn_addA').click(function(){
+        var line = {
+          type: 1,
+          title: $('input[name="title"]').val(),
+          description : $('input[name="description"]').val(),
+          like: $('input[name="like"]').val(),
+          follow: $('input[name="follow"]').val(),
+          img1: $('input[name="img1"]').val(),
+          img2: $('input[name="img2"]').val(),
+          img3: $('input[name="img3"]').val()
+        }
+        console.log(line);
+        query.push(line);
+        console.log(query);
+      });
+      $('#btn_addB').click(function(){
+          var line = {
+          type: 2,
+          title: $('input[name="title"]').val(),
+          description : $('input[name="description"]').val(),
+          like: $('input[name="like"]').val(),
+          follow: $('input[name="follow"]').val(),
+          img1: $('input[name="img1"]').val()
+        }
+        console.log(line);
+        query.push(line);
+        console.log(query);
+      });
+      $('#submit').click(function(){
+        console.log(query);
+        var param = {
+          itemArr: JSON.stringify(query) 
+        }
+        console.log(param);
+        $.ajax({
+            type: 'post',
+            url: '/gen-mail',
+            data: param,
+            success: function(data){
+              console.log(data);
+            },
+            dataType: 'json'
+        });
+      });
+
+    </script>
+  </body>
+</html>
