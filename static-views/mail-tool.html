@@ -46,7 +46,7 @@
       $('#submit').click(function(){
         console.log(query);
         var param = {
-          itemArr: JSON.stringify(query) 
+          itemArr: query
         }
         console.log(param);
         $.ajax({
@@ -54,12 +54,19 @@
             url: '/gen-mail',
             data: param,
             success: function(data){
+              console.log('response:');
               console.log(data);
+              alert(data);
             },
-            dataType: 'json'
+            dataType: 'text'
         });
       });
 
     </script>
+
+    <form action="/gen-mail" method="post">
+      <input name="test" value="testvla">
+      <input type="submit" value="sub">
+    </form>
   </body>
 </html>
