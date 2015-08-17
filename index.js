@@ -59,11 +59,13 @@ router.post('/gen-mail',function*(next){
     var content = yield render('mail',this.request.body);
     yield writeFileThunk('dest/mail.html',content);
     this.body = 'suc, plz check dest/mail.html!';
-    if(this.body.sendMail){
+    debugger;
+    if(this.request.body.sendMail){
       var mailConfig = {
         type: 'html',
         content: content
       }
+      debugger;
       mail.send(mailConfig);
     }
   }

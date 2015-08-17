@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+var config = require('./config.json');
 
 
 /**
@@ -11,40 +12,23 @@ data param sample:
 */
 
 var send = function(data){
-  var transporter = nodemailer.createTransport(smtpTransport({
-      port: 465,
-      host: 'smtp.qq.com',
-      secure: true,
-      auth: {
-          user: '245292529',
-          pass: 'XXX'
-      }
-  }));
+  var transporter = nodemailer.createTransport(smtpTransport(config.mailBindingOption));
 
-  var mailOptions;
+  var options = config.mailOptions;
   if(data.type === 'text'){
-    mailOptions = {
-      from: '245292529@qq.com', // sender address 
-      to: 'vikings825@gmail.com', // list of receivers 
-      subject: 'text', // Subject line 
-      text: data.content // plaintext body 
-    };
+    options.subject = 'text';
+    options.text = data.content;
   }
   else if(data.type === 'html'){
-    mailOptions = {
-      from: '245292529@qq.com', // sender address 
-      to: 'vikings825@gmail.com', // list of receivers  
-      subject: 'html', // Subject line 
-      // text: 'Hello world teteteteteasddsads✔' // plaintext body 
-      html: data.content // html body 
-    };
+    options.subject = 'html';
+    options.html = data.content;
   }
-  transporter.sendMail(mailOptions, function(error, info){
+
+  transporter.sendMail(options, function(error, info){
       if(error){
           return console.log(error);
       }
       console.log('Message sent: ' + info.response);
-   
   });
 }
 

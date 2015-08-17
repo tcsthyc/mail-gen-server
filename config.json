@@ -1,0 +1,15 @@
+{
+  "mailBindingOption":{
+    "port": 465,
+    "host": "smtp.qq.com",
+    "secure": true,
+    "auth": {
+        "user": "245292529",
+        "pass": ""
+    }
+  },
+  "mailOptions": {
+    "from": "245292529@qq.com",
+    "to": "tcsthyc2.student@sina.com"
+  }
+}

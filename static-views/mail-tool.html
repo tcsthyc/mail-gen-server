@@ -1,6 +1,22 @@
 <html>
   <head>
     <script src="/js/jquery.js"></script>
+    <style>
+      input{
+        display: block;
+        margin: 16px 0;
+      }
+      input[type="checkbox"]{
+        display: inline;
+        margin-left: 3px;
+      }
+
+      #count{
+        width: 100%;
+        border-top: 1px solid #ccc;
+        padding: 8px 0;
+      }
+    </style>
   </head>
   <body>
     <input type="text" name="subject" placeholder="分类">
@@ -14,8 +30,11 @@
     <button id="btn_addA">add A</button>
     <button id="btn_addB">add B</button>
     <button id="submit">submit</button>
+    <p>生成完成后，同时发送一份邮件至邮箱<input type="checkbox"></p>
+    <p id="count">已有0条记录</p>
     <script type="text/javascript">
       var query = [];
+      var countElem = $('#count');
       $('#btn_addA').click(function(){
         var line = {
           type: 1,
@@ -28,8 +47,9 @@
           img2: $('input[name="img2"]').val(),
           img3: $('input[name="img3"]').val()
         }
-        console.log(line);
+
         query.push(line);
+        countElem.html('已有' + query.length + '条记录');
         console.log(query);
       });
       $('#btn_addB').click(function(){
@@ -42,14 +62,16 @@
           follow: $('input[name="follow"]').val(),
           img1: $('input[name="img1"]').val()
         }
-        console.log(line);
+
         query.push(line);
+        countElem.html('已有' + query.length + '条记录');
         console.log(query);
       });
       $('#submit').click(function(){
         console.log(query);
         var param = {
-          itemArr: query
+          itemArr: query,
+          sendMail: $('input[type="checkbox"]').prop('checked')
         }
         console.log(param);
         $.ajax({
@@ -59,17 +81,19 @@
             success: function(data){
               console.log('response:');
               console.log(data);
-              alert(data);
+
+              if(data.indexOf('suc')!==-1){
+                query = [];
+                $('input').each(function(){
+                  $(this).val('');
+                });
+                countElem.html('已有' + 0 + '条记录');
+              }
             },
             dataType: 'text'
         });
       });
 
     </script>
-
-    <form action="/gen-mail" method="post">
-      <input name="test" value="testvla">
-      <input type="submit" value="sub">
-    </form>
   </body>
 </html>
