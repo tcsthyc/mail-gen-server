@@ -3,6 +3,7 @@
     <script src="/js/jquery.js"></script>
   </head>
   <body>
+    <input type="text" name="subject" placeholder="分类">
     <input type="text" name="title" placeholder="标题">
     <input type="text" name="description" placeholder="描述">
     <input type="text" name="like" placeholder="喜欢">
@@ -18,6 +19,7 @@
       $('#btn_addA').click(function(){
         var line = {
           type: 1,
+          subject: $('input[name="subject"]').val(),
           title: $('input[name="title"]').val(),
           description : $('input[name="description"]').val(),
           like: $('input[name="like"]').val(),
@@ -33,6 +35,7 @@
       $('#btn_addB').click(function(){
           var line = {
           type: 2,
+          subject: $('input[name="subject"]').val(),          
           title: $('input[name="title"]').val(),
           description : $('input[name="description"]').val(),
           like: $('input[name="like"]').val(),
@@ -46,7 +49,7 @@
       $('#submit').click(function(){
         console.log(query);
         var param = {
-          itemArr: JSON.stringify(query) 
+          itemArr: query
         }
         console.log(param);
         $.ajax({
@@ -54,12 +57,19 @@
             url: '/gen-mail',
             data: param,
             success: function(data){
+              console.log('response:');
               console.log(data);
+              alert(data);
             },
-            dataType: 'json'
+            dataType: 'text'
         });
       });
 
     </script>
+
+    <form action="/gen-mail" method="post">
+      <input name="test" value="testvla">
+      <input type="submit" value="sub">
+    </form>
   </body>
 </html>
